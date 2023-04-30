@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.guests.constants.DataBaseConstants
+import com.example.guests.constants.GuestConstants
 import com.example.guests.databinding.FragmentAllGuestsBinding
 import com.example.guests.view.adapter.GuestsAdapter
 import com.example.guests.view.listener.OnGuestListener
@@ -44,7 +44,7 @@ class AllGuestsFragment : Fragment() {
 
                 //pra diferenciar o que faz o botão salvar -> insere ou edita convidado ja existente
                 val bundle = Bundle()
-                bundle.putInt(DataBaseConstants.GUEST.ID, id)
+                bundle.putInt(GuestConstants.GUEST.ID, id)
                 intent.putExtras(bundle)
                 startActivity(intent)
 
@@ -52,7 +52,7 @@ class AllGuestsFragment : Fragment() {
 
             override fun onDelete(id: Int) {
                 viewModel.delete(id)
-                viewModel.getAll()
+                viewModel.load(GuestConstants.FILTER.EMPTY)
             }
         }
 
@@ -72,7 +72,7 @@ class AllGuestsFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-        viewModel.getAll()
+        viewModel.load(GuestConstants.FILTER.EMPTY)
     }
     override fun onDestroyView() {
         super.onDestroyView()

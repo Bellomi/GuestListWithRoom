@@ -1,15 +1,15 @@
 package com.example.guests.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.guests.model.GuestModel
 import com.example.guests.R
-import com.example.guests.constants.DataBaseConstants
+import com.example.guests.constants.GuestConstants
 import com.example.guests.databinding.ActivityGuestFormBinding
+import com.example.guests.model.GuestModel
 import com.example.guests.viewmodel.GuestFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
@@ -41,7 +41,7 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
         val bundle = intent.extras
         if (bundle != null) {
             //aqui vai ser atualizado o valor, já que o guestID recebe um valor diferente de 0
-            guestId = bundle.getInt(DataBaseConstants.GUEST.ID)
+            guestId = bundle.getInt(GuestConstants.GUEST.ID)
             viewModel.get(guestId)
         }
     }
@@ -53,7 +53,11 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
                 val name = binding.editName.text.toString()
                 val presence = binding.radioPresent.isChecked
                 //na inserção vem o valor padrão = 0
-                val model = GuestModel(guestId, name, presence)
+                val model = GuestModel().apply {
+                    this.id = guestId
+                    this.name = name
+                    this.presence = presence
+                }
                 viewModel.save(model)
             }
         }

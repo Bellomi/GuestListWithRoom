@@ -10,7 +10,7 @@ import com.example.guests.repository.GuestRepository
 //é a viewmodel que lida com os dados passados pela activity
 class GuestFormViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = GuestRepository.getInstance(application)
+    private val repository = GuestRepository(application)
 
     //observable
     private val guestModel = MutableLiveData<GuestModel>()
